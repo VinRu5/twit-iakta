@@ -222,6 +222,41 @@ export default new Vuex.Store({
         })
     },
 
+    addComment: (context, payload) => {
+
+      //aggiungo un commento
+      return axios.post('http://staging.iakta.net:8000/api/addcomment', { postId: payload.postId, comment: payload.comment }, generateHeaders(context.state.token))
+        .then(res => {
+          console.log(res.data)
+          return res
+        })
+        .catch(err => {
+          console.log(err)
+          return err
+        })
+    },
+
+    removeComment: (context, payload) => {
+      const params = {
+        headers: {
+          Authorization: `Bearer ${context.state.token}`
+        },
+        data: {
+          postId: payload.postId,
+          commentId: payload.commentId
+        }
+      };
+  
+      //effettuo chiamata api per rimuovere il commento
+      return axios.delete('http://staging.iakta.net:8000/api/deleteComment', params)
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
+
 
 })

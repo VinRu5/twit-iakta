@@ -2,11 +2,14 @@
     <div class="comments">
         <div 
             v-for="comment in comments" 
-            :key="comment.id"
+            :key="comment.Id"
         >
             {{ comment.Text }}
+            <button @click="removeComment(comment.Id)">Elimina</button>
         </div>
-        <AddComment/>
+        <AddComment 
+            :postId="idPost"
+        />
     </div>
 </template>
 
@@ -32,6 +35,16 @@ export default {
 
         comments() {
             return this.getPostDetails;
+        }
+    },
+
+    methods: {
+        removeComment(id) {
+            console.log(id)
+            this.$store.dispatch('removeComment', { postId: this.idPost, commentId: id })
+                .then(()=> {
+                    this.$store.dispatch('getApiPostDetails', { id: this.idPost })
+                })
         }
     },
 }

@@ -19,9 +19,18 @@ export default {
         }
     },
 
+    props: {
+        postId: Number,
+    },
+
     methods: {
         addComment() {
             console.log(this.commentText)
+            this.$store.dispatch('addComment', { postId: this.postId, comment: this.commentText })
+                .then(()=> {
+                    this.commentText = ''
+                    this.$store.dispatch('getApiPostDetails', { id: this.postId })
+                })
         }
     }
 
