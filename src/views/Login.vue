@@ -66,12 +66,10 @@ export default {
                     username: this.login.username, 
                     password: this.login.password
                 }
-            )
-            .then(()=> {
+            ).then(()=> {
                 console.log('login vue then')
                 this.$router.replace('/dashboard')
-            })
-            .catch(e => {
+            }).catch(e => {
                 console.log(e)
             })
 

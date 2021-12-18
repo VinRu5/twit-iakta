@@ -2,30 +2,47 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+const generateHeaders = (token) => {
+  return { headers: { Authorization: `Bearer ${token}` } }
+}
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('tokenJWT') || '',
+    users: [],
+    followedUsers: [],
+
   },
 
 
   getters: {
     isAuthenticated: state => !!state.token,
+    getUsers: state => state.users,
+    getFollowedUsers: state => state.followedUsers,
   },
 
   mutations: {
     setToken: (state, data) => {
       state.token = data.token
+    },
+
+    setUsers: (state, data) => {
+      state.users = data.users
+    },
+
+    setFollowedUsers: (state, data) => {
+      state.followedUsers = data.followedUsers
     }
   },
 
   actions: {
-    login: (context, payload) => {
+    login: (context, payload) => { //servizio per effettuare il login
       console.log('context', context, 'payload', payload)
 
       //chiamo l'api passando i dati di login
-      axios.post('http://staging.iakta.net:8000/api/login', payload)
+      return axios.post('http://staging.iakta.net:8000/api/login', payload)
         .then(res => {
           console.log(res.data);
           console.log('login store then')
@@ -38,6 +55,7 @@ export default new Vuex.Store({
 
           //salvo il token all'interno dello store dell'applicazione
           context.commit('setToken', { token: apiToken })
+          console.log('apiToken', apiToken)
 
           return res
 
@@ -45,6 +63,7 @@ export default new Vuex.Store({
         .catch(e => {
           console.error(e);
 
+          //cancello il token dalla memoria se ottengo errore nel login
           localStorage.removeItem('tokenJWT')
 
           return e
@@ -53,10 +72,10 @@ export default new Vuex.Store({
 
     },
 
-    register: (context, payload) => {
+    register: (context, payload) => { //servizio di registrazione utente
       console.log('register', payload);
 
-      axios.post('http://staging.iakta.net:8000/api/register', payload)
+      return axios.post('http://staging.iakta.net:8000/api/register', payload)
         .then(res => {
           console.log(res.data);
 
@@ -67,11 +86,11 @@ export default new Vuex.Store({
         })
     },
 
-    logout: (context) => {
+    logout: (context) => { //servizio per il logout
 
-      const headers = { 'Authorization': `Bearer ${context.state.token}` }
+      const params = null;
 
-      axios.post('http://staging.iakta.net:8000/api/logout', headers)
+      return axios.post('http://staging.iakta.net:8000/api/logout', params, generateHeaders(context.state.token))
       .then((res) => {
         console.log(res.data)
 
@@ -86,23 +105,37 @@ export default new Vuex.Store({
 
     },
 
-    getUsers: (context, payload) => {
+    getApiUsers: (context) => { //servizio per ricevere tutti gli utenti registrati
 
-      console.log('token store', context.state.token)
-
-      const headers = { 'Authorization': `Bearer ${context.state.token}` }
-      console.log(headers, context, payload)
-
-      axios.get('http://staging.iakta.net:8000/api/listUsers', {
-        'headers': headers
-      })
+      //chiatmata api per richiedere gli utenti dell'app
+      axios.get('http://staging.iakta.net:8000/api/listUsers', generateHeaders(context.state.token))
         .then(res => {
-          console.log(res)
+          //se esistono vengono settati in users
+          context.commit('setUsers', { users: res.data })
         })
         .catch(e => {
           console.log(e);
+          //se da errore viene rimosso il token
+          localStorage.removeItem('tokenJWT')
         });
-    }
+    },
+
+    getApiFollowedUsers: (context) => {
+      
+      //chiamata api per prendere gli utenti che si stanno seguendo
+      axios.get('http://staging.iakta.net:8000/api/followedUsers', generateHeaders(context.state.token))
+        .then(res => {
+          //se esiste setto followedUsers
+          context.commit('setFollowedUsers', { followedUsers: res.data })
+        })
+        .catch(err => {
+          console.log(err);
+          //se da errore viene rimosso il token
+          localStorage.removeItem('tokenJWT')
+        })
+
+    },
+
   },
 
   modules: {
