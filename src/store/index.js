@@ -13,6 +13,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('tokenJWT') || '',
     users: [],
     followedUsers: [],
+    posts: [],
 
   },
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     isAuthenticated: state => !!state.token,
     getUsers: state => state.users,
     getFollowedUsers: state => state.followedUsers,
+    getPosts: state => state.posts,
   },
 
   mutations: {
@@ -34,6 +36,10 @@ export default new Vuex.Store({
 
     setFollowedUsers: (state, data) => {
       state.followedUsers = data.followedUsers
+    },
+
+    setPosts: (state, data) => {
+      state.posts = data.posts
     }
   },
 
@@ -136,8 +142,68 @@ export default new Vuex.Store({
 
     },
 
+    addFollowUser: (context, payload) => {
+
+      //effettuo chiamata api per aggiungere l'utente ai seguiti
+      return axios.post('http://staging.iakta.net:8000/api/followUser', { id: payload.id }, generateHeaders(context.state.token))
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+    },
+
+    removeFollowUser: (context, payload) => {
+
+
+      const params = {
+        headers: {
+          Authorization: `Bearer ${context.state.token}`
+        },
+        data: {
+          id: payload.id
+        }
+      };
+      console.log('delete',params)
+
+      //effettuo chiamata api per rimuovere l'utente ai seguiti
+      return axios.delete('http://staging.iakta.net:8000/api/unFollowUser', params)
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+    },
+
+    postMessage: (context, payload) => {
+
+      //effettuo la chiamata api er postare il messaggio
+      return axios.post('http://staging.iakta.net:8000/api/postMessage', { message: payload.text }, generateHeaders(context.state.token))
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    getApiPosts: (context) => {
+
+      //prendo tutti i post pubbicati
+      axios.get('http://staging.iakta.net:8000/api/posts', generateHeaders(context.state.token))
+        .then(res => {
+          console.log(res.data)
+          context.commit('setPosts', { posts: res.data })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+
   },
 
-  modules: {
-  }
 })
