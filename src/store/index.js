@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem('tokenJWT'),
+    token: localStorage.getItem('tokenJWT') || '',
   },
 
 
@@ -28,6 +28,7 @@ export default new Vuex.Store({
       axios.post('http://staging.iakta.net:8000/api/login', payload)
         .then(res => {
           console.log(res.data);
+          console.log('login store then')
 
           //mi salvo nella variabile apiToken il token di accesso
           const apiToken = res.data.token;
@@ -38,9 +39,15 @@ export default new Vuex.Store({
           //salvo il token all'interno dello store dell'applicazione
           context.commit('setToken', { token: apiToken })
 
+          return res
+
         })
         .catch(e => {
           console.error(e);
+
+          localStorage.removeItem('tokenJWT')
+
+          return e
 
         })
 
@@ -53,10 +60,48 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res.data);
 
+          //TODO: se la registrazione va a buon fine eseguire login per ricevere token
         })
         .catch(e => {
           console.error(e);
         })
+    },
+
+    logout: (context) => {
+
+      const headers = { 'Authorization': `Bearer ${context.state.token}` }
+
+      axios.post('http://staging.iakta.net:8000/api/logout', headers)
+      .then((res) => {
+        console.log(res.data)
+
+        localStorage.removeItem('tokenJWT')
+
+        context.commit('setToken', { token: '' })
+
+      })
+      .catch(e => {
+        console.log(e)
+      })
+
+    },
+
+    getUsers: (context, payload) => {
+
+      console.log('token store', context.state.token)
+
+      const headers = { 'Authorization': `Bearer ${context.state.token}` }
+      console.log(headers, context, payload)
+
+      axios.get('http://staging.iakta.net:8000/api/listUsers', {
+        'headers': headers
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
 

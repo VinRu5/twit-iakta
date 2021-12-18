@@ -8,7 +8,8 @@ import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
 
 const protect = (to, from, next) => {
-  if(store.getters.isAuthenticathed) {
+  
+  if (store.getters.isAuthenticated) {
     next();
     return;
   }

@@ -32,9 +32,25 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Login',
+
+    created() {
+
+        if(this.isAuthenticated) {
+            this.$router.replace('/dashboard')
+        }
+    },
+
+    computed: {
+
+        ...mapGetters([
+            'isAuthenticated'
+        ]),
+
+    },
 
     data() {
         return {
@@ -45,19 +61,20 @@ export default {
     methods: {
         sendLogin() {
 
-            this.$store.dispatch('login', { username: this.login.username, password: this.login.password})
+            this.$store.dispatch('login', 
+                { 
+                    username: this.login.username, 
+                    password: this.login.password
+                }
+            )
+            .then(()=> {
+                console.log('login vue then')
+                this.$router.replace('/dashboard')
+            })
+            .catch(e => {
+                console.log(e)
+            })
 
-            // axios.post('http://staging.iakta.net:8000/api/login', this.login)
-            // .then(res => {
-            //     console.log(res.data);
-            //     this.$cookies.set('token', res.data.token);
-            //     //localStorage.token = res.data.token;
-            //     this.$emit('loginTrue');
-            // })
-            // .catch(e => {
-            //     console.error(e);
-                
-            // })
         }
     }
 

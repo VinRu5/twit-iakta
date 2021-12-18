@@ -44,9 +44,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Register',
+
+    created() {
+
+        if(this.isAuthenticated) {
+            this.$router.replace('/dashboard');
+        }
+
+    },
+
+    computed: {
+        ...mapGetters([
+            'isAuthenticated',
+        ])
+    },
 
     data() {
         return {
@@ -65,15 +80,12 @@ export default {
                     password: this.register.password
                 }
             )
-
-            // axios.post('http://staging.iakta.net:8000/api/register', this.register)
-            // .then(res => {
-            //     console.log(res.data);
-            //     this.$emit('registerTrue');
-            // })
-            // .catch(e => {
-            //     console.error(e);
-            // })
+            .then(()=> {
+                this.$router.replace('/dashboard')
+            })
+            .catch(e => {
+                console.log(e)
+            })
         }
     }
 
