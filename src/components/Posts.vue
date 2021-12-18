@@ -6,13 +6,18 @@
             :key="post.id"
         >
             {{ post.message }}
+            <Comments
+                :idPost="post.id"
+            />
         </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Comments from './Comments.vue';
 export default {
+  components: { Comments },
     name: 'Posts',
 
     created() {
@@ -30,7 +35,7 @@ export default {
     },
 
     methods: {
-    
+        
     }
 }
 </script>

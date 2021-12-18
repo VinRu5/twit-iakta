@@ -14,7 +14,7 @@ export default new Vuex.Store({
     users: [],
     followedUsers: [],
     posts: [],
-
+    postDetails: [],
   },
 
 
@@ -23,6 +23,7 @@ export default new Vuex.Store({
     getUsers: state => state.users,
     getFollowedUsers: state => state.followedUsers,
     getPosts: state => state.posts,
+    getPostDetails: state => state.postDetails,
   },
 
   mutations: {
@@ -40,7 +41,11 @@ export default new Vuex.Store({
 
     setPosts: (state, data) => {
       state.posts = data.posts
-    }
+    },
+
+    setPostDetails: (state, data) => {
+      state.postDetails = data.postDetails
+    },
   },
 
   actions: {
@@ -202,7 +207,20 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-    }
+    },
+
+    getApiPostDetails: (context, payload) => {
+
+      //prendo i dettagli di un post specifico
+      axios.get(`http://staging.iakta.net:8000/api/postDetail/${payload.id}`, generateHeaders(context.state.token))
+        .then(res => {
+          console.log(res.data)
+          context.commit('setPostDetails', { postDetails: res.data })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
 
   },
 
