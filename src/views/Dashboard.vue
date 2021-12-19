@@ -1,34 +1,53 @@
 <template>
-    <div>
-        Dashboard
-        <NewPost/>
+    <div class="container-fluid container-twit">
+        <div class="row">
+            <div class="col-1">
+                <Navbar/>
 
-        <Posts/>
+            </div>
 
-        <Users 
-            :users="allUsers" 
-            section='all'
-            @buttonUser="addUser"
-        />
-        <Users 
-            :users="followedUsers" 
-            section='followed'
-            @buttonUser="removeUser"
-        />
+            <div class="col">
+                <div class="row">
+                    <div class="col">
 
-        <Logout/>
+                        <NewPost/>
+
+                        <Posts/>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+
+                        <Users 
+                            :users="allUsers" 
+                            section='all'
+                            @buttonUser="addUser"
+                        />
+                        <Users 
+                            :users="followedUsers" 
+                            section='followed'
+                            @buttonUser="removeUser"
+                        />
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <Logout/>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import Logout from '../components/Logout.vue';
+import Navbar from '../components/Navbar.vue';
 import NewPost from '../components/NewPost.vue';
 import Posts from '../components/Posts.vue';
 import Users from '../components/Users.vue';
 
 export default {
-  components: { Users, Logout, NewPost, Posts },
+    components: { Users, Logout, NewPost, Posts, Navbar },
     name: 'Dashboard',
 
     created() {

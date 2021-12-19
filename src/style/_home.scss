@@ -1,0 +1,36 @@
+.home {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &-title {
+        position: absolute;
+        top: 200px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 60px;
+        color: $blue;
+    }
+
+    &-link {
+        position: absolute;
+        top: 24px;
+        right: 12px;
+        color: $blue;
+        
+        &-rel{
+            margin-right: 6px;
+            text-decoration: none;
+
+            &:hover {
+                color: $grey;
+            }
+        }
+    }
+}

@@ -1,45 +1,54 @@
 <template>
-    <div class="row justify-content-center">
-        <h1>Registrati subito!</h1>
-        <form @submit.prevent="sendRegister" class="form-container col-8">
-            <div class="row form-section"> 
-                <label for="username" class="col-12">Username</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    class="col-12" 
-                    v-model="register.username"
-                />
+    <div class="container container-twit">
+        <div class="home-link">
+            <router-link to="/" class="home-link-rel">Home</router-link>
+        </div>
+
+        <div class="row justify-content-center">
+            <h1 class="form-title">Registrati subito!</h1>
+            <div class="col-10 col-md-8 col-lg-6">
+
+                <form @submit.prevent="sendRegister" class="form-container">
+                    <div class="row form-section"> 
+                        <label for="username" class="col-12">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="col-12 input-text" 
+                            v-model="register.username"
+                        />
+                    </div>
+
+                    <div class="row form-section">
+                        <label for="email" class="col-12">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="col-12 input-text"
+                            v-model="register.email"
+                        />
+                    </div>
+
+                    <div class="row form-section">
+                        <label for="password" class="col-12">Password</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            class="col-12 input-text"
+                            v-model="register.password"
+                        />
+                    </div>
+
+                    <div class="form-section">
+                        <input type="submit" value="Registrati" class="button"> 
+                    </div>
+                </form>
             </div>
 
-            <div class="row form-section">
-                <label for="email" class="col-12">Email</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    class="col-12"
-                    v-model="register.email"
-                />
-            </div>
-
-            <div class="row form-section">
-                <label for="password" class="col-12">Password</label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="password" 
-                    class="col-12"
-                    v-model="register.password"
-                />
-            </div>
-
-            <div class="form-section">
-                <input type="submit" value="Registrati" class="btn btn-primary"> 
-            </div>
-        </form>
-
+        </div>
     </div>
 </template>
 
