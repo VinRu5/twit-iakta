@@ -34,3 +34,9 @@ body {
     color: $black;
     margin: 12px 0;
 }
+
+.border-container {
+    border-left: 1px solid $blue;
+    border-right: 1px solid $blue;
+    box-shadow: $color-shadow-blue;
+}

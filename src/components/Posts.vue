@@ -11,7 +11,9 @@
             
             <Comments
                 :idPost="post.id"
+                v-if="post.viewComment"
             />
+            <div class="view-comment" @click="showComment(post.id)">Vai al post =></div>
         </div>
     </div>
 </template>
@@ -45,11 +47,23 @@ export default {
 
             const users = this.getUsers;
 
-            const userObj = users.filter(user => id === user.id);
-            
-            console.log(userObj)
+            const userObj = users.find(user => id === user.id);
 
-            return userObj[0].username;
+            return userObj.username;
+        },
+
+        showComment(id) {
+
+            const postReset = this.posts.map(post => {
+                return {...post, viewComment: false}
+            });
+
+            console.log('reset',postReset)
+            this.posts = postReset;
+
+            const index = this.posts.findIndex(post=> id === post.id);
+            
+            this.posts[index].viewComment = true;
         }
     }
 }

@@ -10,6 +10,9 @@ $grey: #999999;
 $grey-light: #EFF3F4;
 $black: #10141A;
 $color-shadow: 0px 0px 3px 1px rgba($color: #000, $alpha: .2);
+$color-shadow-blue: 0px 6px 6px 3px rgba($color: #1C9CEF, $alpha: .2);
+$red: #E3242B;
+$blush: #BC544B;
 
 
 //font
@@ -27,6 +30,44 @@ $font-twit: 'Lato', sans-serif;
 
     &:hover {
         background-color: $blue-hover;
+    }
+}
+
+.button-small {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    z-index: 1001;
+}
+
+.button-small-blue {
+    border: 1px solid $blue;
+    color: $blue;
+    background-color: $white;
+
+    &:hover {
+        border: 1px solid $azure;
+        color: $white;
+        background-color: $blue-hover;
+    }
+}
+
+.button-small-red {
+    border: 1px solid $red;
+    color: $red;
+    background-color: $white;
+
+    &:hover {
+        border: 1px solid $blush;
+        color: $white;
+        background-color: $red;
     }
 }
 

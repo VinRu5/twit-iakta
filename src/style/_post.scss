@@ -23,4 +23,12 @@
         font-size: 12px;
         color: $grey;
     }
+
+    .view-comment {
+        font-size: 12px;
+        text-align: right;
+        text-decoration: underline;
+        color: $blue;
+        cursor: pointer;
+    }
 }
