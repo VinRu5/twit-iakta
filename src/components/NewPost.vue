@@ -1,11 +1,17 @@
 <template>
-    <div>
-        <input 
-            type="text" 
-            placeholder="Cosa stai pensando?"
-            v-model="postText"
-        >
-        <button @click="addPost">Pubblica</button>
+    <div class="mt-4 mb-4 row justify-content-center">
+        <div class="col-10">
+
+            <div class="row justify-content-center">
+                <input 
+                    type="text" 
+                    placeholder="Cosa stai pensando?"
+                    class="input-text col-8"
+                    v-model="postText"
+                >
+                <button @click="addPost" class="button col-2">Twitta</button>
+            </div>
+        </div>
     </div>
 </template>
 

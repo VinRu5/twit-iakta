@@ -1,11 +1,14 @@
 <template>
-    <div class="posts">
+    <div class="posts row justify-content-center">
         <div 
-            class="post" 
+            class="post col-10" 
             v-for="post in posts"
             :key="post.id"
         >
-            {{ post.message }}
+            <div class="username">{{ userName(post.UserId) }}</div>
+            <div class="message">{{ post.message }}</div>
+            <div class="date">{{ post.date }}</div>
+            
             <Comments
                 :idPost="post.id"
             />
@@ -26,16 +29,28 @@ export default {
 
     computed: {
         ...mapGetters([
-            'getPosts'
+            'getPosts',
+            'getUsers'
         ]),
 
         posts() {
             return this.getPosts;
-        }
+        },
+
+        
     },
 
     methods: {
-        
+        userName(id) {
+
+            const users = this.getUsers;
+
+            const userObj = users.filter(user => id === user.id);
+            
+            console.log(userObj)
+
+            return userObj[0].username;
+        }
     }
 }
 </script>

@@ -2,6 +2,10 @@
     <section v-if="users.length > 0" :class="section">
         <h2>{{ viewComponent.title }}</h2>
         <div v-for="user in users" :key="user.id">
+            <div class="user-img">
+                <img src="../assets/defaultPhoto.gif" alt="">
+
+            </div>
             {{ user.username }}
             <button @click="eventUser(user.id)">{{ viewComponent.buttonText }}</button>
         </div>

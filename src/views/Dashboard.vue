@@ -1,5 +1,9 @@
 <template>
     <div class="container-fluid container-twit">
+        <div class="row justify-content-end">
+
+            <Logout class="col-1"/>
+        </div>
         <div class="row">
             <div class="col-1">
                 <Navbar/>
@@ -15,7 +19,7 @@
                         <Posts/>
                     </div>
                     <div class="col-12 col-md-3 col-lg-3">
-
+                        
                         <Users 
                             :users="allUsers" 
                             section='all'
@@ -33,7 +37,7 @@
 
 
 
-            <Logout/>
+            
         </div>
     </div>
 </template>
