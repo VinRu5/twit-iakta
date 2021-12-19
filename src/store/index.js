@@ -40,12 +40,7 @@ export default new Vuex.Store({
     },
 
     setPosts: (state, data) => {
-      const posts = data.posts;
-      const newData = posts.map(post => {
-        return {...post, viewComment: false}
-      });
-      console.log('mut', newData)
-      state.posts = newData
+      state.posts = data.posts
     },
 
     setPostDetails: (state, data) => {

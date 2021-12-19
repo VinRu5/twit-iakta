@@ -32,3 +32,13 @@
         cursor: pointer;
     }
 }
+
+.comment {
+    position: relative;
+    border: 1px solid $blue;
+    background-color: $white;
+    border-radius: 12px;
+    padding: 3px 12px;
+    margin: 12px 0;
+    font-size: 14px;
+}

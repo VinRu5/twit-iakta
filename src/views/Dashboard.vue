@@ -76,6 +76,7 @@ export default {
     methods: {
 
         getApi() {
+
             this.$store.dispatch('getApiUsers')
                 .then(()=> {
                     console.log('ok')

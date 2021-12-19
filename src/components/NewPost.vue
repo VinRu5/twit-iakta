@@ -30,7 +30,8 @@ export default {
             console.log(this.postText)
             this.$store.dispatch('postMessage', { text: this.postText })
                 .then(()=> {
-                    this.postText = ''
+                    this.postText = '';
+                    this.$store.dispatch('getApiPosts')
                 })
                 .catch(err => {
                     console.log(err)

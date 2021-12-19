@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
+import DetailPost from '../views/DetailPost.vue'
 
 const protect = (to, from, next) => {
   
@@ -38,6 +39,12 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    beforeEnter: protect,
+  },
+  {
+    path: '/post/:id',
+    name: 'DetailPost',
+    component: DetailPost,
     beforeEnter: protect,
   },
 ]

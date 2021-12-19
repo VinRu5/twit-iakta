@@ -1,11 +1,12 @@
 <template>
-    <div class="comments">
+    <div class="comments" v-if="comments.length > 0">
         <div 
             v-for="comment in comments" 
             :key="comment.Id"
+            class="comment"
         >
             {{ comment.Text }}
-            <button @click="removeComment(comment.Id)">Elimina</button>
+            <button @click="removeComment(comment.Id)" class="button-small button-small-red">x</button>
         </div>
         <AddComment 
             :postId="idPost"

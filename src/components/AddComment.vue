@@ -3,9 +3,10 @@
         <input 
             type="text"
             placeholder="Commenta..."
+            class="input-text"
             v-model="commentText"
         >
-        <button @click="addComment">Commenta</button>
+        <button @click="addComment" class="button">Commenta</button>
     </div>
 </template>
 
